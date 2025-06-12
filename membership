@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>TPG - Membership</title>
+	<title>Torrey Pines Gulls - Become a Member</title>
 
 	<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -14,7 +14,7 @@
 	<link rel="manifest" href="/site.webmanifest" />
 
 	<meta property="og:type" content="website" />
-	<meta property="og:title" content="TPG » Membership" />
+	<meta property="og:title" content="TPG » Become a Member" />
 	
 	<meta property="og:image" content="https://www.torreypinesgulls.org/images/social.jpg" />
 	<meta property="og:image:width" content="1200"/>
@@ -30,9 +30,9 @@
 <div id="kloud-wrapper"><div id="kloud-sky"><canvas id="klouds"></canvas></div></div>
 <div class="container-fluid px-0" id="main_nav"><div class="wrapper">
 	<a href="/"><img src="/images/logo.svg" id="logo" width="300" height="78" alt="TPG"></a>
-	<ul class="nav justify-content-center">
-<li class="nav-item px-1 px-sm-2">
-<a class="nav-link dropdown-toggle" href="/index.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">Torrey Pines Gulls</a>
+	<ul class="nav justify-content-center mt-3">
+<li class="nav-item px-1 px-md-2">
+<a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">Torrey Pines Gulls</a>
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="/welcome-to-torrey-pines-gulls">Welcome to Torrey Pines Gulls</a></li>
 <li><a class="dropdown-item" href="/flying-torrey">Flying Torrey Pines</a></li>
@@ -41,7 +41,7 @@
 <li><a class="dropdown-item" href="/suggestions-and-questions">Questions and Suggestions</a></li>
 </ul>
 </li>
-<li class="nav-item px-1 px-sm-2">
+<li class="nav-item px-1 px-md-2">
 <a class="nav-link dropdown-toggle" href="/the-club" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contests</a>
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="/f3l-res-competitions">F3L / F3RES Thermal Duration Competitions</a></li>
@@ -53,7 +53,7 @@
 <li><a class="dropdown-item" href="/foamy-fun-fly">Foamy Fun Fly</a></li>
 </ul>
 </li>
-<li class="nav-item px-1 px-sm-2">
+<li class="nav-item px-1 px-md-2">
 <a class="nav-link dropdown-toggle" href="/locations" role="button" data-bs-toggle="dropdown" aria-expanded="false">Locations</a>
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="/torrey-pines-glider-port">Torrey Pines Gliderport</a></li>
@@ -61,10 +61,13 @@
 <li><a class="dropdown-item" href="/poway-field">Poway Field</a></li>
 </ul>
 </li>
-<li class="nav-item px-1 px-sm-2">
-<a class="nav-link" href="/calendar">Calendar</a>
+<li class="nav-item px-1 px-md-2">
+<a class="nav-link dropdown-toggle" href="/events" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
+<ul class="dropdown-menu">
+<li><a class="dropdown-item" href="/calendar">Calendar</a></li>
+</ul>
 </li>
-<li class="nav-item px-1 px-sm-2">
+<li class="nav-item px-1 px-md-2">
 <a class="nav-link dropdown-toggle" href="/membership" role="button" data-bs-toggle="dropdown" aria-expanded="false">Membership</a>
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="/membership">Become a Member</a></li>
@@ -75,20 +78,7 @@
 
 </div></div>
 <div class="content">
-	<div class="container-fluid"><h1>Membership</h1>
-<p>Torrey Pines Gulls Radio Control Soaring Society, Inc. (TPG) is a not-for-profit corporation whose purpose is to support and encourage member participation in the hobby/sport of model sailplane flying. TPG is an AMA chartered club and therefore proof of membership in the Academy of Model Aeronautics (AMA) is a prerequisite for TPG membership. Membership in AMA provides liability and property damage insurance while operating model aircraft safely and with the permission of the site owner.</p>
-<p>Note: You are required by the Gliderport operator, Air California Adventure, LLC, to annually sign a liability waiver form at the Gliderport office/shop before permission to fly at Torrey Pines Gliderport will be granted.</p>
-<p>The form below may be used to apply for, or renew membership in TPG. Dues are as follows:</p>
-<p>Full Members – $60 per year<br />
-Junior rate up to 19 is $5<br />
-Student rate 19 or older is  $30 per year<br />
-Receive a credit of up to $20 on your membership dues. $10.00 per each half-day working at any TPG  flying field<br />
-New members joining in the first six months of the year pay the full rate.  Those joining in July through September pay half the applicable rate.  If you are a new member joining in October through December you pay the full rate but your membership is considered paid through the end of the following year.</p>
-<p>Please pay online using PayPal, which allows payment using PayPal, debit or credit card. If however, you choose to pay by check or cash, please email the membership chairman at: membership@torreypinesgulls.org to receive a membership application form. When the form is completed, please mail your membership application and payment using the provided pre-addressed return envelope.</p>
-<p>The results of the form will be electronically submitted to TPG’s membership chairman. You will also receive an email of the form results as a confirmation. Please be sure to provide your email address on the application.</p>
-<p>AMA membership is required and you can verify your membership here: AMA Verification.</p>
-<p>AMA Membership application is at: AMA Application.</p>
-<p>Please submit form information before completing PayPal payment information.  </p>	</div>
+	<div class="container"><h1>Become a Member</h1>	</div>
 </div>
 
 <footer class="footer border-top">
