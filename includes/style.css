@@ -1,0 +1,117 @@
+:root {
+	--theme-outline: #0591ff; /* Edit to match Logo outline */
+	--theme-outline-dark: #006bbf; /* Darker version of outline for hover effects */
+	--theme-background: #ddf0fe; /* Pale version of outline for background shading */
+	--bs-link-color: #0591ff;
+}
+
+/* Ensure the body and html take full height */
+html, body {
+	height: 100%;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	scroll-padding-top: 180px;
+	background-color: var(--theme-background)
+}
+
+a.hover {
+	text-decoration: none;
+}
+@media (hover: hover) and (pointer: fine) {
+	a.hover:hover {
+		text-decoration: underline;
+	}
+}
+
+/* Main content should take up remaining space */
+.content {
+	flex: 1; /* Pushes footer down */
+	margin-top: 140px;
+	background-color: #fff;
+	padding-bottom: 40px;
+	z-index: 1;
+}
+
+/* Footer styling */
+footer {
+	padding: 10px;
+	font-size: 0.9rem;
+	color: #666;
+	background-color: #fff;
+	z-index: 100;
+}
+
+/* Top Nav */
+#main_nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding-top: 78px;
+	z-index: 1000;
+}
+
+#main_nav #logo {
+	width: 300px;
+	height: 78px;
+	position: fixed;
+	top: 5px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+#main_nav ol {
+	margin: 0 0 2px 5px;
+}
+#main_nav ol li img {
+	opacity: 0.6;
+}
+#main_nav ol li a {
+	text-decoration: none;
+	opacity: 0.8;
+}
+
+
+@media (hover: hover) and (pointer: fine) {
+	#main_nav ol:hover li img {
+		opacity: 1;
+	}
+	#main_nav ol li a:hover {
+		text-decoration: underline;
+		opacity: 1;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	
+	.nav-underline {
+		--bs-nav-underline-gap: 0.2rem;
+	}
+}
+
+
+/* Clouds */
+#kloud-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 140px;
+	overflow: hidden;
+	width: 100%;
+	z-index: 2;
+}
+#kloud-sky {
+	height: 180px;
+	width: 100%;
+}
+
+#clouds {
+	z-index: 0;
+	position: fixed;
+	top: 40px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	background-color: var(--theme-background);
+}
