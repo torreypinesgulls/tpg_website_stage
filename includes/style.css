@@ -3,6 +3,7 @@
 	--theme-outline-dark: #006bbf; /* Darker version of outline for hover effects */
 	--theme-background: #ddf0fe; /* Pale version of outline for background shading */
 	--bs-link-color: #0591ff;
+	--bs-dropdown-link-hover-bg: #ddf0fe;
 }
 
 /* Ensure the body and html take full height */
@@ -60,27 +61,31 @@ footer {
 	transform: translateX(-50%);
 }
 
-#main_nav ol {
-	margin: 0 0 2px 5px;
-}
-#main_nav ol li img {
-	opacity: 0.6;
-}
-#main_nav ol li a {
-	text-decoration: none;
-	opacity: 0.8;
+.dropdown-item {
+	padding-left: .35rem;
+	transition: padding-left 0.3s;
 }
 
-@media (hover: hover) and (pointer: fine) {
-	#main_nav ol:hover li img {
-		opacity: 1;
-	}
-	#main_nav ol li a:hover {
-		text-decoration: underline;
-		opacity: 1;
-	}
+.dropdown-item:focus,
+.dropdown-item:hover {
+    background-color: var(--theme-background);
+    padding-left: 1rem;
 }
 
+.dropdown-item img {
+	margin-bottom: 3px;
+	height: 16px;
+	width: 16px;
+	opacity: 0.2;
+	margin-right: 0.65rem;
+	transition: all ease 0.3s;
+}
+
+.dropdown-item:focus img,
+.dropdown-item:hover img {
+	opacity: 1;
+	margin-right: 0rem;
+}
 
 /* Clouds */
 #kloud-wrapper {
@@ -120,6 +125,8 @@ footer {
 h2 {
 	margin-top: 30px;
 }
+
+
 /* Responsive Changes */
 
 @media screen and (max-width: 720px) {
