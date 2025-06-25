@@ -77,7 +77,33 @@
 
 </div></div>
 <div class="content">
-	<div class="container"><h1>Calendar</h1><iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showTitle=0&showCalendars=0&src=dHBnc29hcmluZ0BnbWFpbC5jb20&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>	</div>
+	<div class="container"><h1>Calendar</h1>
+<p><select id='filter'>
+			<option value=' selected='selected'>All Events</option>
+		</select>
+
+		<input type='checkbox' id='past-events' value='1' /> Show Past Events
+
+		<div class='row calendar-event mt-3' id='event-template'>
+			<div class='col-3 col-md-2 col-xl-1 text-center'>
+				<div class='date'>
+					<div class='month'>June</div>
+					<div class='day'>28</div>
+					<div class='dayofweek'>Sat</div>
+					<div class='year'>2025</div>
+				</div>
+			</div>
+			<div class='col-9 col-md-10 col-xl-11'>
+				<div class='event-details'>
+					<b class='title'>Title of Event</b>
+					<div class='when'>Jan 28 @8:45am - 1:00pm</div>
+					<div class='where'>Location: Encinitas Field</div>
+					<div class='what'>Description goes here</div>
+				</div>
+			</div>
+		</div>
+
+		<div id='calendar'></div></p>	</div>
 </div>
 
 <footer class="footer border-top">

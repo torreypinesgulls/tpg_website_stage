@@ -1,17 +1,16 @@
 function isWebGLSupported() {
 	//To test, from terminal: open -a "Google Chrome" --args  -disable-webgl
-    try {
-        const canvas = document.createElement('canvas');
-        return !!(window.WebGLRenderingContext && (
-            canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-        );
-    } catch (e) {
-        return false;
-    }
+	try {
+		const canvas = document.createElement('canvas');
+		return !!(window.WebGLRenderingContext && (
+			canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+		);
+	} catch (e) {
+		return false;
+	}
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-
+function initializeCloudAnimation() {
 	//Cloud header animation 1
 	const kl = document.getElementById("klouds");
 	if(kl && isWebGLSupported()) { // this one not currently used
@@ -25,10 +24,162 @@ document.addEventListener("DOMContentLoaded", function() {
 				cloudColor2: '#ffffff',
 				bgColor: '#ddf0fe'
 			});
-
 		} catch (error) {
-
+			console.error('Problem with animated clouds',error);
 		}
 	}
+}
+
+function updateDomDate(date,dateElement) {
+	const month = date.toLocaleString(undefined, { month: 'short' }); // "June"
+	const day = date.getDate();                            // 25
+	const dayOfWeek = date.toLocaleString(undefined, { weekday: 'short' }); // "Tue"
+	const year = date.getFullYear();                       // 2024
+
+	dateElement.querySelector('.month').textContent = month;
+	dateElement.querySelector('.day').textContent = day;
+	dateElement.querySelector('.dayofweek').textContent = dayOfWeek;
+	dateElement.querySelector('.year').textContent = year;
+}
+
+function formatDate(start,end,dom) {
+	if (!start && !end) {
+		return 'No date'
+	};
+
+	const startDate = start ? new Date(start) : null;
+	const endDate = end ? new Date(end) : null;
+
+	const dateOptions = { month: 'long', day: 'numeric', year: 'numeric' };
+	const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
+
+
+	if(startDate && endDate) {
+		updateDomDate(startDate,dom);
+		const sameDay = startDate.toDateString() === endDate.toDateString();
+		const dateStr = startDate.toLocaleDateString(undefined, dateOptions);
+		const startTimeStr = startDate.toLocaleTimeString(undefined, timeOptions).toLowerCase();
+		const endTimeStr = endDate.toLocaleTimeString(undefined, timeOptions).toLowerCase();
+		return sameDay
+			? `${dateStr} ${startTimeStr} to ${endTimeStr}`
+			: `${dateStr} ${startTimeStr} to ${endDate.toLocaleDateString(undefined, dateOptions)} ${endTimeStr}`;
+	}
+
+	if (startDate) {
+		updateDomDate(startDate,dom);
+		const dateStr = startDate.toLocaleDateString(undefined, dateOptions);
+		const timeStr = startDate.toLocaleTimeString(undefined, timeOptions).toLowerCase();
+		return `${dateStr} ${timeStr}`;
+	}
+
+	if (endDate) {
+		updateDomDate(endDate,dom);
+		const dateStr = endDate.toLocaleDateString(undefined, dateOptions);
+		const timeStr = endDate.toLocaleTimeString(undefined, timeOptions).toLowerCase();
+		return `${dateStr} ${timeStr}`;
+	}
+
+	return 'Invalid date';
+}
+
+function formatEvent(event,id) {
+	const dom = document.getElementById(id);
+
+	const title = event.summary || 'No title';
+	const location = event.location || '';
+	const description = event.description.replace(/\+\+\+[\s\S]*?\+\+\+/g, '').trim() || '';
+	const start = event.start || '';
+	const end = event.end || '';
+	const dates = formatDate(start,end,dom);
+
+	dom.querySelector('b.title').textContent = title;
+	dom.querySelector('.when').textContent = dates;
+	dom.querySelector('.where').innerHTML = "Location: "+location;
+	dom.querySelector('.what').innerHTML = description;
+}
+
+var calendarData = [];
+var currentFilter = ""; //for the calendar
+var showPastEvents = false;
+
+function buildCalendar() {
+	console.log(calendarData);
+
+	const now = new Date().toISOString();
+	const template = document.getElementById('event-template');
+	const outputDiv = document.getElementById('calendar');
+	outputDiv.innerHTML = "";
+
+	var i = 0;
+	calendarData.forEach(event => {
+		i++;
+		if(currentFilter=="" || currentFilter==event.filter) {
+			if(showPastEvents || event.start>now) {
+				const clone = template.cloneNode(true);
+				clone.id = 'event'+i;
+				outputDiv.appendChild(clone);
+				formatEvent(event,clone.id);
+			}
+		}
+	});
+}
+
+function buildFilter() {
+	const outputSelect = document.getElementById('filter');
+	var seen = new Set();
+
+	calendarData.forEach(event => {
+		if(!seen.has(event.filter)) {
+			seen.add(event.filter);
+			var option = document.createElement('option');
+			option.textContent = event.filter_title;
+			option.value = event.filter;
+			outputSelect.appendChild(option);
+		}
+	});
+
+	//Listen to changes to the select element 
+	outputSelect.addEventListener('change', function() {
+		currentFilter = this.value;
+		buildCalendar();
+	});
+
+	//Listen to changes to the past event checkbox element 
+	document.getElementById('past-events').addEventListener('change', function() {
+		if(this.checked) showPastEvents = true;
+		else showPastEvents = false;
+		buildCalendar();
+	});
+}
+
+function sortEvents(data) {
+	if(Array.isArray(data)) {
+		data.sort((a, b) => new Date(a.start) - new Date(b.start));
+	}
+	return data;
+}
+
+function readCalendar() {
+	const calendar = document.getElementById('calendar');
+	if(!calendar) return;
+	fetch('/data/calendar/all.json').then(response => {
+		if(!response.ok) {
+			throw new Error('Network response was not ok');
+		}
+		return response.json();
+	}).then(data => {
+		calendarData = sortEvents(data);
+		buildFilter();
+		buildCalendar();
+	}).catch(error => {
+		console.error('There was a problem loading the JSON file:', error);
+	});
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+
+	initializeCloudAnimation();
+
+	readCalendar();
 
 });

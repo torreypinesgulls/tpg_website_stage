@@ -34,10 +34,6 @@ a.hover {
 	z-index: 1;
 }
 
-.gallery {
-	margin: auto;
-}
-
 /* Footer styling */
 footer {
 	padding: 10px;
@@ -128,6 +124,52 @@ footer {
 
 h2 {
 	margin-top: 30px;
+}
+
+/* Calendar */
+
+#event-template {
+	display: none;
+}
+.calendar-event .date {
+	border: 1px solid var(--theme-outline-dark);
+	border-radius: 10px;
+	overflow: hidden;
+}
+.calendar-event .month {
+	font-size: 1.2rem;
+	background-color: var(--theme-background);
+}
+.calendar-event .day {
+	font-weight: bold;
+	font-size: 2rem;
+	line-height: 2.2rem;
+}
+.calendar-event .dayofweek {
+	font-size: 0.9rem;	
+	line-height: 0.8rem;
+	margin-bottom: .3rem;
+}
+.calendar-event .year {
+	font-size: 0.9rem;	
+	background-color: var(--theme-background);
+}
+.calendar-event .event-details {
+	border-radius: 10px;
+	overflow: hidden;
+	padding: 10px;
+	background-color: #f1f1f1;
+}
+.calendar-event .title {
+	font-weight: bold;
+}
+.calendar-event .when {
+}
+.calendar-event .where {
+}
+.calendar-event .what {
+	font-size: 0.9rem;
+	border-top: 1px solid #eee;
 }
 
 
