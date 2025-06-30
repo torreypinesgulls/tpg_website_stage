@@ -21,10 +21,10 @@
 	<meta property="og:image:height" content="675"/>
 
 	<link href="/includes/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/includes/style.685dd9a6cecf9.css" rel="stylesheet">
+	<link href="/includes/style.686307aa51d52.css" rel="stylesheet">
 	<script type="text/javascript" src="/includes/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="/includes/vendor/klouds.min.js"></script>
-	<script type="text/javascript" src="/includes/script.685dd9a6cecf9.js"></script>
+	<script type="text/javascript" src="/includes/script.686307aa51d52.js"></script>
 </head>
 <body>
 <div id="kloud-wrapper"><div id="kloud-sky"><canvas id="klouds"></canvas></div></div>
@@ -78,7 +78,104 @@
 </div></div>
 <div class="content">
 	<div class="container"><h1>Membership Payments</h1>
-<p>TBD</p>	</div>
+<p>If you have not already done so, please submit your <a href="https://docs.google.com/forms/d/e/1FAIpQLSfwMhlL_U8pmgwpzquG862x-cEUycNuuNc-UfzstjgmmG_GgQ/viewform?usp=dialog">membership application</a> first.</p>
+<p><script src="https://www.paypal.com/sdk/js?client-id=BAArHRpOzMO8imJCNgjgNIFdZd_dqfiJVS7L5rfm0stCQB2yPMeLAg88gJlj2bheCWo0KPH1IucaSGQhuM&currency=USD"></script>
+
+<form id="payment-form" class="mb-4">
+	<div class="mb-3">
+		<label for="name" class="form-label">Your Full Name</label>
+		<input type="text" class="form-control" id="name" required>
+	</div>
+
+	<div class="mb-3">
+		<label for="ama-number" class="form-label">Your AMA Number</label>
+		<input type="text" class="form-control" id="ama-number" required>
+	</div>
+
+	<div class="mb-3">
+		<label for="membership-type" class="form-label">Select Membership Type</label>
+		<select class="form-select" id="membership-type" required>
+			<option value="60">Adult Membership – $60 dues</option>
+			<option value="5">Junior up to age 19 – $5 dues</option>
+			<option value="30">Student Member – $30 dues</option>
+			<option value="30">New Adult Member July through December – $30 dues</option>
+			<option value="50">Adult Membership with $10 membership work Credit – $50 dues</option>
+			<option value="40">Adult Membership with $20 membership work Credit – $40 dues</option>
+			<option value="test">test</option>
+		</select>
+	</div>
+
+	<div class="alert alert-danger d-none" id="alert" role="alert"></div>
+
+	<div id="paypal-button-container" class="mt-5"></div>
+</form>
+
+
+<script>
+	function showError(message) {
+		const error = document.getElementById('name').value.trim();
+		error.textContent = message;
+			error.classList.remove('d-none');
+	}
+
+	function validateForm(actions) {
+		const container = document.getElementById('paypal-button-container');
+		const name = document.getElementById('name').value.trim();
+		const amaNumber = document.getElementById('ama-number').value.trim();
+		const select = document.getElementById('membership-type');
+		const amount = parseInt(select.value);
+
+		if(name && amaNumber && amount) {
+			actions.enable();
+			container.classList.add('active');
+		} else {
+			actions.disable();
+			container.classList.remove('active');
+		}
+	}
+
+	paypal.Buttons({
+		onInit: function(data,actions) {
+
+			actions.disable(); // Disable button initially
+
+			document.querySelectorAll('#name, #ama-number, #membership-type').forEach(input => {
+				input.addEventListener('input', () => { validateForm(actions); } );
+			});
+
+			validateForm(actions);
+		},
+
+		createOrder: function(data, actions) {
+			const name = document.getElementById('name').value.trim();
+			const amaNumber = document.getElementById('ama-number').value.trim();
+			const select = document.getElementById('membership-type');
+			const amount = parseInt(select.value);
+
+			// if(!name || !name.length) return showError("Please enter your name");
+			// if(!amaNumber || !amaNumber.length) return showError("Please enter your AMA number");
+			// if(!amount || amount==NaN || amount==0) return showError("Please select a membership type");
+
+			return actions.order.create({
+				purchase_units: [{
+					amount: {
+						value: amount
+					},
+					custom_id: amaNumber,
+					description: `Membership dues for ${name} #${amaNumber}`
+				}]
+			});
+		},
+
+		onApprove: function(data, actions) {
+			return actions.order.capture().then(function(details) {
+				const name = document.getElementById('name').value.trim();
+				const amaNumber = document.getElementById('ama-number').value.trim();
+				window.location.href = "thanks.html";
+			});
+		}
+	}).render('#paypal-button-container');
+</script></p>	</div>
 </div>
 
 <footer class="footer border-top">

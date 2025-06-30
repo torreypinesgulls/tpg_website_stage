@@ -174,16 +174,6 @@ h2 {
     padding-top: 10px;
 }
 
-/* Paypal */
-
-  #paypal-button-container {
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
-  }
-
-  #paypal-button-container.active {
-    opacity: 1;
-  }
 
 /* Responsive Changes */
 
