@@ -10,8 +10,8 @@ function isWebGLSupported() {
 	}
 }
 
+//Cloud header animation
 function initializeCloudAnimation() {
-	//Cloud header animation 1
 	const kl = document.getElementById("klouds");
 	if(kl && isWebGLSupported()) { // this one not currently used
 		try {
@@ -30,6 +30,7 @@ function initializeCloudAnimation() {
 	}
 }
 
+//given a JS Date object and a dom element for the graphical calendar item, updates it in place.
 function updateDomDate(date,dateElement) {
 	const month = date.toLocaleString(undefined, { month: 'short' }); // "June"
 	const day = date.getDate();                            // 25
@@ -42,6 +43,9 @@ function updateDomDate(date,dateElement) {
 	dateElement.querySelector('.year').textContent = year;
 }
 
+//Takes a string date like "2024-07-06T16:00:00-07:00" for both start and end
+//Returns a pretty string like "July 12, 2025 8:30 am to 2:00 pm" and also updates
+//the dom element passed in for the visibile date graphic.
 function formatDate(start,end,dom) {
 	if (!start && !end) {
 		return 'No date'
@@ -52,7 +56,6 @@ function formatDate(start,end,dom) {
 
 	const dateOptions = { month: 'long', day: 'numeric', year: 'numeric' };
 	const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
-
 
 	if(startDate && endDate) {
 		updateDomDate(startDate,dom);
@@ -65,14 +68,14 @@ function formatDate(start,end,dom) {
 			: `${dateStr} ${startTimeStr} to ${endDate.toLocaleDateString(undefined, dateOptions)} ${endTimeStr}`;
 	}
 
-	if (startDate) {
+	if(startDate) {
 		updateDomDate(startDate,dom);
 		const dateStr = startDate.toLocaleDateString(undefined, dateOptions);
 		const timeStr = startDate.toLocaleTimeString(undefined, timeOptions).toLowerCase();
 		return `${dateStr} ${timeStr}`;
 	}
 
-	if (endDate) {
+	if(endDate) {
 		updateDomDate(endDate,dom);
 		const dateStr = endDate.toLocaleDateString(undefined, dateOptions);
 		const timeStr = endDate.toLocaleTimeString(undefined, timeOptions).toLowerCase();
@@ -82,11 +85,11 @@ function formatDate(start,end,dom) {
 	return 'Invalid date';
 }
 
+//Given an event object and a dom ID, this will format the event and insert the data into the DOM
 function formatEvent(event,id) {
 	const dom = document.getElementById(id);
 
 	const title = event.summary || 'No title';
-	const location = event.location || '';
 	const start = event.start || '';
 	const end = event.end || '';
 	const dates = formatDate(start,end,dom);
@@ -96,13 +99,18 @@ function formatEvent(event,id) {
 	description = description.replace(/^(<br\s*\/?>\s*)+/i, ''); //Remove leading line breaks
 	description = description.trim(); //trim whitespace
 
+	//Auto link locations to the location page on the site
+	let location = event.location || '';
+	location = location.replace("Poway Field", '<a href="/poway-field.html">Poway Field</a>');
+	location = location.replace("Torrey Pines Gliderport", '<a href="/torrey-pines-glider-port.html">Torrey Pines Gliderport</a>');
+	location = location.replace("Encinitas Field", '<a href="/encinitas-field.html">Encinitas Field</a>');
+
 	//TODO: Auto link URLS that are not already clickable links
-	//TODO: Auto link locations to the location page on the site
 	//TODO: Add link to the contest page
 
 	dom.querySelector('b.title').textContent = title;
 	dom.querySelector('.when').textContent = dates;
-	dom.querySelector('.where').innerHTML = "Location: "+location;
+	if(location.length) dom.querySelector('.where').innerHTML = "Location: "+location;
 	dom.querySelector('.what').innerHTML = description;
 	if(description.length) dom.querySelector('.what').classList.add('filled');
 }
@@ -111,6 +119,7 @@ var calendarData = [];
 var currentFilter = ""; //for the calendar
 var showPastEvents = false;
 
+// Rebuilds and draws the entire calendar of events based on the current calendarData and filters which are stored in global variables
 function buildCalendar() {
 	console.log(calendarData);
 
@@ -120,12 +129,13 @@ function buildCalendar() {
 	outputDiv.innerHTML = "";
 
 	var i = 0;
-	calendarData.forEach(event => {
+	calendarData.forEach(event => { //iterate each event
 		i++;
-		if(currentFilter=="" || currentFilter==event.filter) {
-			if(showPastEvents || event.start>now) {
-				const clone = template.cloneNode(true);
+		if(currentFilter=="" || currentFilter==event.filter) { //check for event type filter
+			if(showPastEvents || event.start>now) { //check for past events checkbox
+				const clone = template.cloneNode(true); //clone the event template from the dom
 				clone.id = 'event'+i;
+				clone.classList.add(event.filter);
 				outputDiv.appendChild(clone);
 				formatEvent(event,clone.id);
 			}
@@ -133,6 +143,7 @@ function buildCalendar() {
 	});
 }
 
+//Builds the calendar filter
 function buildFilter() {
 	const outputSelect = document.getElementById('filter');
 	var seen = new Set();
@@ -168,6 +179,7 @@ function sortEvents(data) {
 	return data;
 }
 
+//Reads the calendar json file from the server and then builds and draws the calendar
 function readCalendar() {
 	const calendar = document.getElementById('calendar');
 	if(!calendar) return;
@@ -187,6 +199,8 @@ function readCalendar() {
 	});
 }
 
+
+//Bootup code when page is ready.
 document.addEventListener("DOMContentLoaded", function() {
 
 	initializeCloudAnimation();
